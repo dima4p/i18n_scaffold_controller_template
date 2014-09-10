@@ -1,6 +1,25 @@
 = i18n_scaffold_controller_template
 
-Description goes here.
+Scaffold controller template is enhanced in order to let to
+* use i18n for flash messages
+* use cancan (cancancan) gem to authorize users
+* use WiceGrid
+
+== Installation
+
+Add to your Gemfile
+
+  gem 'i18n_scaffold_controller_template'
+
+Then bundle as usual.
+
+== Usage
+
+Next time you run
+
+  rails generate scaffold SomeModel ...
+
+you will get the controller with the named functionalities.
 
 == Contributing to i18n_scaffold_controller_template
  
@@ -14,6 +33,6 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2014 Dmitri Koulikoff (acer). See LICENSE.txt for
+Copyright (c) 2014 Dmitri Koulikoff. See LICENSE.txt for
 further details.
 
