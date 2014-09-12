@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
   s.authors = ["Dmitri Koulikoff"]
-  s.date = "2014-09-10"
+  s.date = "2014-09-12"
   s.description = "Scaffold controller template expoiting i18n and aware of cancan and WiceGrid"
   s.email = "dima@koulikoff.ru"
   s.extra_rdoc_files = [
