@@ -6,7 +6,7 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 class <%= controller_class_name %>Controller < ApplicationController
 
 <% if Rails.application.config.generators.options[:rails][:cancan] -%>
-  #before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
+  # before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
 <% else -%>
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
@@ -14,7 +14,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # GET <%= route_url %>
   def index
-    #@<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+    # @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
 <% if defined? Wice::WiceGrid -%>
     @grid = initialize_grid @<%= plural_table_name %>
 <% end -%>
@@ -27,7 +27,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>/new
   def new
 <% if Rails.application.config.generators.options[:rails][:cancan] -%>
-    #@<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    # @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
 <% else -%>
     @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
 <% end -%>
@@ -40,7 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>
   def create
 <% if Rails.application.config.generators.options[:rails][:cancan] -%>
-    #@<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
+    # @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 <% else -%>
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 <% end -%>
@@ -68,11 +68,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   private
+
 <% if Rails.application.config.generators.options[:rails][:cancan] -%>
   # Use callbacks to share common setup or constraints between actions.
-  #def set_<%= singular_table_name %>
-  #  @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
-  #end
+  # def set_<%= singular_table_name %>
+  #   @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+  # end
 <% else -%>
   # Use callbacks to share common setup or constraints between actions.
   def set_<%= singular_table_name %>
