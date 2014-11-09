@@ -89,7 +89,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     list = [
       <%= attributes_names.map { |name| ":#{name}" }.join(', ') %>
     ]
-    params.require(<%= ":#{singular_table_name}" %>).permit(list)
+    params.require(<%= ":#{singular_table_name}" %>).permit(*list)
     <%- end -%>
   end
 end
