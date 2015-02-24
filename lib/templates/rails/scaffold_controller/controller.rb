@@ -16,9 +16,19 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>.json
   def index
     # @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+    respond_to do |format|
+      format.html do
 <% if defined? Wice::WiceGrid -%>
-    @grid = initialize_grid @<%= plural_table_name %>
+        @grid = initialize_grid @<%= plural_table_name %>
 <% end -%>
+      end
+      format.json do
+<% if defined? Kaminari -%>
+        @<%= plural_table_name %> = @<%= plural_table_name %>.page(params[:page]) if params[:page].present?
+        @<%= plural_table_name %> = @<%= plural_table_name %>.per(params[:per_page]) if params[:per_page].present?
+<% end -%>
+      end
+    end
   end
 
   # GET <%= route_url %>/1
