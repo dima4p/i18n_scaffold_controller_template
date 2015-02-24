@@ -13,6 +13,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 <% end -%>
 
   # GET <%= route_url %>
+  # GET <%= route_url %>.json
   def index
     # @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
 <% if defined? Wice::WiceGrid -%>
@@ -21,6 +22,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   # GET <%= route_url %>/1
+  # GET <%= route_url %>/1.json
   def show
   end
 
@@ -38,6 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   # POST <%= route_url %>
+  # POST <%= route_url %>.json
   def create
 <% if Rails.application.config.generators.options[:rails][:cancan] -%>
     # @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
@@ -45,26 +48,39 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 <% end -%>
 
-    if @<%= orm_instance.save %>
-      redirect_to @<%= singular_table_name %>, notice: t('<%= table_name %>.was_created')
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @<%= orm_instance.save %>
+        format.html { redirect_to @<%= singular_table_name %>, notice: t('<%= table_name %>.was_created') }
+        format.json { render :show, status: :created, location: @<%= singular_table_name %> }
+      else
+        format.html { render :new }
+        format.json { render json: @<%= singular_table_name %>.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # PATCH/PUT <%= route_url %>/1
+  # PATCH/PUT <%= route_url %>/1.json
   def update
-    if @<%= orm_instance.update("#{singular_table_name}_params") %>
-      redirect_to @<%= singular_table_name %>, notice: t('<%= table_name %>.was_updated')
-    else
-      render action: 'edit'
+    respond_to do |format|
+      if @<%= orm_instance.update("#{singular_table_name}_params") %>
+        format.html { redirect_to @<%= singular_table_name %>, notice: t('<%= table_name %>.was_updated') }
+        format.json { render :show, status: :ok, location: @<%= singular_table_name %> }
+      else
+        format.html { render :edit }
+        format.json { render json: @<%= singular_table_name %>.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   # DELETE <%= route_url %>/1
+  # DELETE <%= route_url %>/1.json
   def destroy
     @<%= orm_instance.destroy %>
-    redirect_to <%= index_helper %>_url, notice: t('<%= table_name %>.was_deleted')
+    respond_to do |format|
+      format.html { redirect_to <%= index_helper %>_url, notice: t('<%= table_name %>.was_deleted') }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -81,7 +97,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 <% end -%>
 
-  # Only allow a trusted parameter "white list" through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def <%= "#{singular_table_name}_params" %>
     <%- if attributes_names.empty? -%>
     params[<%= ":#{singular_table_name}" %>]
