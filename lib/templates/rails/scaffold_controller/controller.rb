@@ -1,3 +1,5 @@
+# This is the main controller to process model <%= class_name %>
+#
 <% if namespaced? -%>
 require_dependency "<%= namespaced_file_path %>/application_controller"
 
