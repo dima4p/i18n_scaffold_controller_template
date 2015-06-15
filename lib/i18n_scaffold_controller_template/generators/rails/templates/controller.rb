@@ -17,7 +17,12 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET <%= route_url %>
   # GET <%= route_url %>.json
   def index
+<% if Rails.application.config.generators.options[:rails][:cancan] -%>
     # @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+<% else -%>
+    @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+<% end -%>
+<% if defined?(Wice::WiceGrid) or defined?(Kaminari) -%>
     respond_to do |format|
       format.html do
 <% if defined? Wice::WiceGrid -%>
@@ -30,6 +35,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         @<%= plural_table_name %> = @<%= plural_table_name %>.per(params[:per_page]) if params[:per_page].present?
 <% end -%>
       end
+<% end -%>
     end
   end
 
@@ -66,7 +72,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.json { render :show, status: :created, location: @<%= singular_table_name %> }
       else
         format.html { render :new }
-        format.json { render json: @<%= singular_table_name %>.errors, status: :unprocessable_entity }
+        format.json { render json: <%= "@#{orm_instance.errors}" %>, status: :unprocessable_entity }
       end
     end
   end
@@ -80,7 +86,7 @@ class <%= controller_class_name %>Controller < ApplicationController
         format.json { render :show, status: :ok, location: @<%= singular_table_name %> }
       else
         format.html { render :edit }
-        format.json { render json: @<%= singular_table_name %>.errors, status: :unprocessable_entity }
+        format.json { render json: <%= "@#{orm_instance.errors}" %>, status: :unprocessable_entity }
       end
     end
   end
