@@ -35,8 +35,8 @@ class <%= controller_class_name %>Controller < ApplicationController
         @<%= plural_table_name %> = @<%= plural_table_name %>.per(params[:per_page]) if params[:per_page].present?
 <% end -%>
       end
-<% end -%>
     end
+<% end -%>
   end
 
   # GET <%= route_url %>/1
