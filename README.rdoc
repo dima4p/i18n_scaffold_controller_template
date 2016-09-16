@@ -21,6 +21,12 @@ Next time you run
 
 you will get the controller with the named functionalities.
 
+== New options
+
+[with_api]  adding --with_api will generate one additional controller in the namespace `Api::`
+
+[api_version]  this parameter adds an additional namespace specified after `Api::`
+
 == Contributing to i18n_scaffold_controller_template
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
