@@ -86,8 +86,8 @@ class Api::<%= options[:api_version].camelcase + '::' if options[:api_version].p
 <%- if attributes_names.empty? -%>
     params.fetch(:<%= singular_table_name %>, {})
 <%- else -%>
-    list = [
-      <%= attributes_names.map { |name| ":#{name}" }.join(', ') %>
+    list = %i[
+      <%= attributes_names.join(' ') %>
     ]
     params.require(:<%= singular_table_name %>).permit(*list)
 <%- end -%>
